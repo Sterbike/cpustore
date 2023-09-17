@@ -1,6 +1,10 @@
 <script>
     import jsonData from "../../data/cpus.json";
+    import menu from "../+page.svelte"
     const AMDcpus = jsonData.cpus.find(cpu => cpu.brand === 'AMD');
+    export const sendData = (data) => {
+        localStorage.setItem("CpuName", data)
+    }
 </script>
 
 <body> 
@@ -8,11 +12,11 @@
     {#if AMDcpus}
     <div class="AMDcpu">
         {#each AMDcpus.models as model}
-            <div>
+            <div class="cpu">
                 <img src={model.img} alt="cpu">
                 <p>{model.name}</p>
                 <p>Price: {model.price}$</p>
-                <a href="asd">view more...</a>
+                <a on:click={() => sendData(model.name)} href="./CPUDetails">view more...</a>
             </div>
 
         {/each}
@@ -30,6 +34,19 @@
     }
     h1{
         text-align: center;
+    }
+
+    .cpu{
+        margin: auto;
+        margin-top: 10vh;
+        background-color:orange;
+        max-width:10vw
+        
+    }
+
+    .cpu p{
+        margin: auto;
+       
     }
 
     img{
