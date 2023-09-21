@@ -1,9 +1,18 @@
 <script>
     import jsonData from "../../data/cpus.json";
-    import menu from "../+page.svelte"
+    import { menu } from '../../../src/store'
+    import { onMount } from "svelte";
+    console.log(menu);
     const AMDcpus = jsonData.cpus.find(cpu => cpu.brand === 'AMD');
+
+    onMount(() => {
+        menu.set(1);
+    });
+    
     export const sendData = (data) => {
         localStorage.setItem("CpuName", data)
+        menu.set(3);
+        console.log(menu);
     }
 </script>
 
@@ -16,7 +25,7 @@
                 <img src={model.img} alt="cpu">
                 <p>{model.name}</p>
                 <p>Price: {model.price}$</p>
-                <a on:click={() => sendData(model.name)} href="./CPUDetails">view more...</a>
+                <a on:click={() => sendData(model.name)} href="./">view more...</a>
             </div>
 
         {/each}
@@ -32,6 +41,7 @@
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         text-align: center;
     }
+
     h1{
         text-align: center;
     }
@@ -39,14 +49,8 @@
     .cpu{
         margin: auto;
         margin-top: 10vh;
-        background-color:orange;
-        max-width:10vw
-        
-    }
-
-    .cpu p{
-        margin: auto;
-       
+        background-color: aquamarine;
+        width: max-content;
     }
 
     img{
